@@ -27,14 +27,16 @@ module.exports = {
                  }]
              }
         });
+        const req1 = req.body.status
         Promise
         .all ([responseUsuario, responsePatologia])
         .then(responses => {
              return usuarios_patologias
-                 .create ({
+                 .findOrCreate ({
+                    where: {
                       id_usuario: responses[0].id_usuario,
-                      id_patologia: responses[1].id_patologia,
-                      status: req.body.status, 
+                      id_patologia: responses[1].id_patologia, 
+                    } 
                  })
                  .then(usuarios_patologias => res.status(200).send(usuarios_patologias))
          })
@@ -106,5 +108,30 @@ module.exports = {
           });
         });
      },
+
+     deleteByIdUsuario_IdPatologia (req,res) {    
+          const id_patologia =req.body.id_patologia;
+          const id_usuario =req.body.id_usuario;
+          return usuarios_patologias.destroy({
+            where: { id_patologia: id_patologia, id_usuario: id_usuario }
+          })
+            .then(num => {
+              if (num == 1) {
+                res.send({
+                  message: "Usuarios_Patologias was deleted successfully!"
+                });
+              } else {
+                res.send({
+                  message: `Cannot delete Usuarios_Patologias with id_patologia=${id_patologia} and id_usuario=${id_usuario} . Maybe Usuarios_Patologias was not found!`
+                });
+              }
+            })
+            .catch(err => {
+              res.status(500).send({
+                message: "Could not delete Usuarios_Patologias with id_patologia=" + id_patologia +" and id_usuario=" + id_usuario +"  Error:"+ err
+              });
+            });
+  },
+
 
 };
