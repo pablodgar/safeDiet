@@ -109,6 +109,27 @@ module.exports = {
         });
      },
 
+
+
+//Este metodo retorna la/s patologia/s de un usuario segun su id_usuario
+  findPatologiasByIdUsuario (req, res) {
+    return usuarios_patologias.findAll({
+         where: {
+               id_usuario: req.body.id_usuario,
+         },
+         include: [{
+          model: patologias,
+          as: 'patologias',
+     }]
+    })
+    .then(usuarios_patologias => res.status(200).send(usuarios_patologias))
+    .catch(err => {
+      res.status(400).send({
+        message: "Could not findPatologiasByIdUsuario usuarios_patologias   Error: "+ err
+      });
+    });
+ },
+
      deleteByIdUsuario_IdPatologia (req,res) {    
           const id_patologia =req.body.id_patologia;
           const id_usuario =req.body.id_usuario;

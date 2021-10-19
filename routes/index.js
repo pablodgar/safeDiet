@@ -22,6 +22,7 @@ module.exports = (app) => {
    app.post('/api/usuarios_patologias/create', usuarios_patologiasController.create);
    app.get('/api/usuarios_patologias/list', usuarios_patologiasController.list);
    app.get('/api/usuarios_patologias/findOne', usuarios_patologiasController.findOne);
+   app.get('/api/usuarios_patologias/findPatologiasByIdUsuario', usuarios_patologiasController.findPatologiasByIdUsuario);
    app.delete('/api/usuarios_patologias/deleteByIdUsuario_IdPatologia', usuarios_patologiasController.deleteByIdUsuario_IdPatologia);
  
 };
