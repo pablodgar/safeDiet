@@ -6,9 +6,9 @@ module.exports = {
        return patologias
            .findOrCreate ({
             where: {
-                descripcion: req.body.descripcion
+                descripcion: req.query.descripcion
             },
-            descripcion: req.body.descripcion
+            descripcion: req.query.descripcion
            })
            .then(patologias => res.status(200).send(patologias))
            .catch(error => res.status(400).send(error))
@@ -46,7 +46,7 @@ module.exports = {
           })
           .catch(err => {
             res.status(500).send({
-              message: "Error retrieving Patologia with id=" + id
+              message: "Error retrieving Patologia with id=" + id +"  Error:"+ err
             });
           });
       },

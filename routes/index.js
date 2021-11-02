@@ -2,6 +2,8 @@
 const patologiaController = require('../controllers/patologias');
 const usuarioController = require('../controllers/usuarios');
 const usuarios_patologiasController = require('../controllers/usuarios_patologias');
+const planController = require('../controllers/plan');
+
 
 module.exports = (app) => {
    app.get('/api', (req, res) => res.status(200).send ({
@@ -24,5 +26,7 @@ module.exports = (app) => {
    app.get('/api/usuarios_patologias/findOne', usuarios_patologiasController.findOne);
    app.get('/api/usuarios_patologias/findPatologiasByIdUsuario', usuarios_patologiasController.findPatologiasByIdUsuario);
    app.delete('/api/usuarios_patologias/deleteByIdUsuario_IdPatologia', usuarios_patologiasController.deleteByIdUsuario_IdPatologia);
- 
+   
+   app.get('/api/plan/getPlan', planController.getPlan);
+
 };

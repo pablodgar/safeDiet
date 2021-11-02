@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class patologias extends Model {
+  class bebidas extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,19 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  patologias.init({
-    id_patologia: { 
+  bebidas.init({
+    id_bebida: { 
       allowNull: false,
 			autoIncrement: true,
 			primaryKey: true,
 			type: DataTypes.INTEGER
     },
     descripcion: DataTypes.STRING,
-    codigo: DataTypes.STRING
+    kcal: DataTypes.FLOAT,
+    hc: DataTypes.FLOAT,
+    apto_celiaco : DataTypes.TINYINT(1),
+    apto_diabetico : DataTypes.TINYINT(1),
+    url_imagen: DataTypes.STRING,
+    tipo: DataTypes.STRING,
+    unidad: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'patologias',
-    timestamps: false
+    modelName: 'bebidas',
   });
-  return patologias;
+  return bebidas;
 };
