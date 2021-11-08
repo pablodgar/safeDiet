@@ -36,7 +36,7 @@ module.exports = {
     signin(req, res) {
       usuarios.findOne({
         where: {
-          nombre: req.body.nombre
+          email: req.body.email
         }
       })
         .then(usuarios => {
