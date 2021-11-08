@@ -1,5 +1,9 @@
+const config = require("../config/config");
 const Sequelize     = require('sequelize');
 const usuarios       = require('../models').usuarios;
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
 
 module.exports = {
     create(req, res) {
@@ -7,13 +11,15 @@ module.exports = {
            .findOrCreate ({
             where: {
                 email: req.body.email,
-                password: req.body.password,
+                //password: req.body.password,
+                password: bcrypt.hashSync(req.body.password, 8),
                 salt: req.body.salt,
                 apellido: req.body.apellido,
                 nombre: req.body.nombre
             },
                 email: req.body.email,
-                password:  req.body.password,
+                //password:  req.body.password,
+                password: bcrypt.hashSync(req.body.password, 8),
                 salt:  req.body.salt,
                 apellido:  req.body.apellido,
                 nombre:  req.body.nombre
@@ -25,6 +31,47 @@ module.exports = {
             });
           });
     },
+
+   
+    signin(req, res) {
+      usuarios.findOne({
+        where: {
+          nombre: req.body.nombre
+        }
+      })
+        .then(usuarios => {
+          if (!usuarios) {
+            return res.status(404).send({ message: "Usuario Not found." });
+          }
+    
+          let passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            usuarios.password
+          );
+    
+          if (!passwordIsValid) {
+            return res.status(401).send({
+              accessToken: null,
+              message: "Invalid Password!"
+            });
+          }
+    
+          let token = jwt.sign({ id: usuarios.id }, config.auth.secret, {
+            expiresIn: 86400 // 24 hours
+          });
+            res.status(200).send({
+              idUsuario: usuarios.id_usuario,
+              nombre: usuarios.nombre,
+              email: usuarios.email,
+              accessToken: token
+          });
+        })
+        .catch(err => {
+          res.status(500).send({ message: err.message });
+        })
+      },
+
+
 
     list(_, res) {
         return usuarios.findAll({})

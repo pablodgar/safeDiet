@@ -16,6 +16,7 @@ module.exports = (app) => {
    app.delete('/api/patologias/deleteAll', patologiaController.deleteAll);
 
    app.post('/api/usuarios/create', usuarioController.create);
+   app.post('/api/usuarios/signin', usuarioController.signin);
    app.get('/api/usuarios/list', usuarioController.list);
    app.get('/api/usuarios/findOne', usuarioController.findOne);
    app.delete('/api/usuarios/deleteByIdUsuario', usuarioController.deleteByIdUsuario);
