@@ -17,6 +17,7 @@ module.exports = (app) => {
 
    app.post('/api/usuarios/create', usuarioController.create);
    app.post('/api/usuarios/signin', usuarioController.signin);
+   app.put('/api/usuarios/logout', usuarioController.logout);
    app.get('/api/usuarios/list', usuarioController.list);
    app.get('/api/usuarios/findOne', usuarioController.findOne);
    app.delete('/api/usuarios/deleteByIdUsuario', usuarioController.deleteByIdUsuario);
