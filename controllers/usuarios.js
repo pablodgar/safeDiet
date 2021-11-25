@@ -13,14 +13,12 @@ module.exports = {
                 email: req.body.email,
                 //password: req.body.password,
                 password: bcrypt.hashSync(req.body.password, 8),
-                salt: req.body.salt,
                 apellido: req.body.apellido,
                 nombre: req.body.nombre
             },
                 email: req.body.email,
                 //password:  req.body.password,
                 password: bcrypt.hashSync(req.body.password, 8),
-                salt:  req.body.salt,
                 apellido:  req.body.apellido,
                 nombre:  req.body.nombre
            })
